@@ -1,0 +1,9 @@
+Ref,Component,Footprint/Package,Quantity,Notes
+U1,Raspberry Pi Pico 2,Module (RP2350) with headers or castellated pads,1,Mounted on B.Cu
+SW1-SW12,Kailh MX Hot-Swap Socket,MX_Hotswap:MX_Hotswap-1U (ai03 MX_V2),12,SMD on B.Cu
+D1-D12,1N4148 Diode,SOD-123 (SMD),12,Anti-ghosting diodes
+J1-J2,Pin Header 1x20,2.54mm pitch through-hole,2,For Pico 2 mounting
+-,M2x6mm Standoffs,-,4,PCB/case mounting
+-,M2 Screws,-,8,Top and bottom fastening
+-,Cherry MX Compatible Switches,-,12,User choice (linear/tactile/clicky)
+-,1U MX Keycaps,-,12,Any MX-compatible profile (Cherry/DSA/SA/etc.)

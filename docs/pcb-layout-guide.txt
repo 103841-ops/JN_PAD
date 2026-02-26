@@ -1,0 +1,102 @@
+JN_PAD — PCB Layout Placement Guide
+=====================================
+
+Board Specifications
+--------------------
+  Dimensions:   76.2mm (W) × 127.0mm (H)
+  Layers:       2-layer — F.Cu (top) + B.Cu (bottom)
+  Thickness:    1.6mm FR4
+  Copper weight: 1oz (35µm)
+
+Design Rules
+------------
+  Min trace width:   0.25mm (signal), 0.5mm (power)
+  Min clearance:     0.2mm
+  Min via drill:     0.3mm
+  Min via diameter:  0.6mm
+  Ground pour:       Both layers (GND net, thermal spokes)
+
+Coordinate System
+-----------------
+  Origin (0,0) = top-left corner of the board outline.
+  X increases to the right; Y increases downward.
+
+Switch Placement (19.05mm grid, centre-to-centre)
+--------------------------------------------------
+  Switch  Layer  X (mm)    Y (mm)    Net Assignment
+  ------  -----  --------  --------  --------------------
+  SW1     B.Cu    9.525     9.525    Pin1=COL0, Pin2=ROW0
+  SW2     B.Cu   28.575     9.525    Pin1=COL1, Pin2=ROW0
+  SW3     B.Cu   47.625     9.525    Pin1=COL2, Pin2=ROW0
+  SW4     B.Cu    9.525    28.575    Pin1=COL0, Pin2=ROW1
+  SW5     B.Cu   28.575    28.575    Pin1=COL1, Pin2=ROW1
+  SW6     B.Cu   47.625    28.575    Pin1=COL2, Pin2=ROW1
+  SW7     B.Cu    9.525    47.625    Pin1=COL0, Pin2=ROW2
+  SW8     B.Cu   28.575    47.625    Pin1=COL1, Pin2=ROW2
+  SW9     B.Cu   47.625    47.625    Pin1=COL2, Pin2=ROW2
+  SW10    B.Cu    9.525    66.675    Pin1=COL0, Pin2=ROW3
+  SW11    B.Cu   28.575    66.675    Pin1=COL1, Pin2=ROW3
+  SW12    B.Cu   47.625    66.675    Pin1=COL2, Pin2=ROW3
+
+Note on Switch Footprint Orientation
+--------------------------------------
+  The MX_V2 MX_Hotswap-1U footprint has the Kailh socket on the top side by
+  default. ALL switch footprints in this PCB are MIRRORED (layer "B.Cu") so
+  that:
+    - The Kailh socket pads are on B.Cu (soldered on the back of the PCB).
+    - The switch stem hole and key cap insert from the front (F.Cu side).
+
+Diode Placement (SOD-123 SMD, B.Cu)
+--------------------------------------
+  Diodes are placed 4mm below their corresponding switch centre.
+  Orientation: Anode (A) towards the column side, Cathode (K) towards the row.
+
+  Diode   X (mm)    Y (mm)    A-Net   K-Net
+  ------  --------  --------  ------  -----
+  D1       9.525    13.525    COL0    ROW0
+  D2      28.575    13.525    COL1    ROW0
+  D3      47.625    13.525    COL2    ROW0
+  D4       9.525    32.575    COL0    ROW1
+  D5      28.575    32.575    COL1    ROW1
+  D6      47.625    32.575    COL2    ROW1
+  D7       9.525    51.625    COL0    ROW2
+  D8      28.575    51.625    COL1    ROW2
+  D9      47.625    51.625    COL2    ROW2
+  D10      9.525    70.675    COL0    ROW3
+  D11     28.575    70.675    COL1    ROW3
+  D12     47.625    70.675    COL2    ROW3
+
+Raspberry Pi Pico 2 (U1) Placement
+------------------------------------
+  Centre:   X=38.1mm, Y=100mm (below the key matrix area)
+  Layer:    B.Cu (component on back of board)
+  Mounting: 2×20 through-hole pin headers, 2.54mm pitch
+  USB port: Faces the bottom edge of the board (Y≈127mm)
+  Important: USB-C connector should be accessible from the board's bottom edge.
+
+Mounting Holes (M2, 2.2mm drill, 4.4mm pad)
+--------------------------------------------
+  H1  (top-left):     X=3.5mm,   Y=3.5mm
+  H2  (top-right):    X=72.7mm,  Y=3.5mm
+  H3  (bottom-left):  X=3.5mm,   Y=123.5mm
+  H4  (bottom-right): X=72.7mm,  Y=123.5mm
+
+Layer Assignments Summary
+--------------------------
+  F.Cu:    Switch insertion holes (plated through), via pads
+  B.Cu:    Kailh hotswap socket pads (SMD), 1N4148 diodes (SMD),
+           Raspberry Pi Pico 2 via through-hole pin headers, GND pour
+  F.SilkS: Board outline text, key position indicators
+  B.SilkS: Component reference designators (mirrored)
+  Edge.Cuts: Board outline rectangle (0,0) → (76.2, 127.0)
+
+Routing Notes
+-------------
+  - Column traces (COL0/COL1/COL2): route horizontally on F.Cu, 0.25mm width.
+  - Row traces (ROW0–ROW3): route horizontally on B.Cu, 0.25mm width.
+  - Power trace (+3V3, VSYS): 0.5mm width.
+  - Ground traces: covered by GND copper pour on both layers.
+  - Use vias (0.6mm dia / 0.3mm drill) to switch between layers where needed.
+  - Keep USB differential pair (D+/D-) matched length if routing on copper;
+    for this design the Pico 2 is used directly so no external USB routing
+    is required.
