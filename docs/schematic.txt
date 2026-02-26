@@ -1,0 +1,66 @@
+JN_PAD — Human-Readable Schematic Description
+==============================================
+
+Overview
+--------
+The JN_PAD macropad uses a 3×4 key matrix (3 columns, 4 rows = 12 keys total)
+driven by a Raspberry Pi Pico 2 (RP2350). Anti-ghosting is achieved using one
+1N4148 diode per key, wired in COL2ROW orientation.
+
+Microcontroller: U1 — Raspberry Pi Pico 2 (RP2350)
+----------------------------------------------------
+  Pin  4  → GP2  → Net: COL0
+  Pin  5  → GP3  → Net: COL1
+  Pin  6  → GP4  → Net: COL2
+  Pin  9  → GP6  → Net: ROW0
+  Pin 10  → GP7  → Net: ROW1
+  Pin 11  → GP8  → Net: ROW2
+  Pin 12  → GP9  → Net: ROW3
+  Pin 36  → +3V3 (power output)
+  Pins 3,8,13,23,28,33,38 → GND
+
+Matrix Wiring Diagram
+---------------------
+
+         COL0 (GP2)      COL1 (GP3)      COL2 (GP4)
+            │                │                │
+ROW0 ──K◁──D1──A──SW1──   ──K◁──D2──A──SW2──   ──K◁──D3──A──SW3──   (GP6)
+            │                │                │
+ROW1 ──K◁──D4──A──SW4──   ──K◁──D5──A──SW5──   ──K◁──D6──A──SW6──   (GP7)
+            │                │                │
+ROW2 ──K◁──D7──A──SW7──   ──K◁──D8──A──SW8──   ──K◁──D9──A──SW9──   (GP8)
+            │                │                │
+ROW3 ──K◁──D10─A──SW10─   ──K◁──D11─A──SW11─   ──K◁──D12─A──SW12─  (GP9)
+
+Diode orientation: COL2ROW
+  - Switch Pin 1 connects to the Column line.
+  - Switch Pin 2 connects to the Diode Anode.
+  - Diode Cathode connects to the Row line.
+
+Switch Symbols
+--------------
+  SW1–SW12: SW_Push (KiCad Switch library)
+  Footprint: MX_Hotswap:MX_Hotswap-1U  (ai03-2725/MX_V2 library)
+
+Diode Symbols
+-------------
+  D1–D12: D (KiCad Device library)
+  Value:    1N4148
+  Footprint: Diode_SMD:D_SOD-123
+
+Power Nets
+----------
+  +3V3 — supplied by Pico 2 internal regulator (pin 36)
+  GND  — common ground
+
+Net Labels Used
+---------------
+  COL0, COL1, COL2  — column scan outputs from the Pico
+  ROW0, ROW1, ROW2, ROW3 — row sense inputs to the Pico
+
+Key to Switch / Row / Column Mapping
+-------------------------------------
+  SW1  → ROW0, COL0   SW2  → ROW0, COL1   SW3  → ROW0, COL2
+  SW4  → ROW1, COL0   SW5  → ROW1, COL1   SW6  → ROW1, COL2
+  SW7  → ROW2, COL0   SW8  → ROW2, COL1   SW9  → ROW2, COL2
+  SW10 → ROW3, COL0   SW11 → ROW3, COL1   SW12 → ROW3, COL2
